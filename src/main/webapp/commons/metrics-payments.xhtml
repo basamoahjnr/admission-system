@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <div id="metrics-payments" class="ui-space-rows">
+        <div class="card-container-payment">
+            <div class="card-1-payment">
+                <div class="card-image-1-payment ui-success">
+                    <h:outputText value="#{dashboardController.totalActualPayment()}">
+                        <f:convertNumber type="currency"
+                                         minFractionDigits="2"
+                                         currencySymbol="GHC "/>
+                    </h:outputText>
+                    <p:divider style="width: 60%"/>
+                    <h:outputText value="Total Actual Payment"/>
+                </div>
+            </div>
+        </div>
+        <div class="card-container-payment">
+            <div class="card-1-payment">
+                <div class="card-image-1-payment ui-info">
+                    <h:outputText
+                            value="#{dashboardController.totalExpectedPayment() - dashboardController.totalActualPayment()}">
+                        <f:convertNumber type="currency"
+                                         minFractionDigits="2"
+                                         currencySymbol="GHC "/>
+                    </h:outputText>
+                    <p:divider style="width: 60%"/>
+                    <h:outputText value="Total Remaining Payment"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-container-payment">
+            <div class="card-1-payment">
+                <div class="card-image-1-payment ui-danger">
+                    <h:outputText value="#{dashboardController.totalExpectedPayment()}">
+                        <f:convertNumber type="currency"
+                                         minFractionDigits="2"
+                                         currencySymbol="GHC "/>
+                    </h:outputText>
+                    <p:divider style="width: 60%"/>
+                    <h:outputText value="Total Expected Payment"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-container-payment">
+            <div class="card-1-payment">
+                <div class="card-image-1-payment ui-primary">
+                    <h:outputText value="#{dashboardController.totalPaymentPeriodToday()}">
+                        <f:convertNumber type="currency"
+                                         minFractionDigits="2"
+                                         currencySymbol="GHC "/>
+                    </h:outputText>
+                    <p:divider style="width: 60%"/>
+                    <h:outputText value="Total Payment Today"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>

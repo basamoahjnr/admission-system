@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/layout/simpleTemplate.xhtml">
+
+    <ui:define name="headTitle">${bundle.PaymentListPage_title}</ui:define>
+
+    <ui:define name="wrapper">
+        <h:form>
+            <p:focus context="@form"/>
+
+            <ui:include src="../commons/main-buttons.xhtml"/>
+
+            <p:card>
+                <!--//Start of Applicant Datatable-->
+                <p:dataTable widgetVar="applicantsTable"
+                             var="applicant"
+                             value="#{applicantController.applicants}"
+                             rows="50"
+                             rowKey="#{applicant.id}"
+                             lazy="true"
+                             paginator="true"
+                             rowIndexVar="index"
+                             filteredValue="#{applicantController.filteredValue}"
+                             paginatorPosition="bottom"
+                             selection="#{applicantController.selectedApplicants}"
+                             disabledSelection="true"
+                             stripedRows="true"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {JumpToPageDropdown}"
+                             currentPageReportTemplate="[ {startRecord} to {endRecord} of {totalRecords} ]"
+                             rowsPerPageTemplate="50,100,150,200,250">
+
+                    <p:ajax event="rowSelectCheckbox" update="@(.ui-button, .ui-confirm-dialog)"/>
+                    <p:ajax event="rowUnselectCheckbox" update="@(.ui-button, .ui-confirm-dialog)"/>
+                    <p:ajax event="rowSelect" update="@(.ui-button, .ui-confirm-dialog)"/>
+                    <p:ajax event="rowUnselect" update="@(.ui-button, .ui-confirm-dialog)"/>
+                    <p:ajax event="toggleSelect" update="@(.ui-button, .ui-confirm-dialog)"/>
+
+                    <p:column width="20px">
+                        <f:facet name="header">
+                            <h:outputText value="ID"/>
+                        </f:facet>
+                        <h:outputText
+                                value="#{index + 1}"/>
+                    </p:column>
+
+                    <p:column headerText="NUMBER"
+                              filterBy="#{applicant.number}"
+                              sortBy="#{applicant.number}"
+                              filterMatchMode="contains">
+                        <f:facet name="filter">
+                            <p:autoComplete value="#{applicantController.filter.entity.number}"
+                                            forceSelection="true"
+                                            minQueryLength="2"
+                                            queryDelay="500"
+                                            emptyMessage="no results"
+                                            completeMethod="#{applicantController.completeApplicantNumber}"
+                                            maxResults="10">
+                                <p:ajax event="itemSelect"
+                                        process="@this"
+                                        update="@none"
+                                        oncomplete="PF('applicantsTable').filter()"/>
+                            </p:autoComplete>
+                        </f:facet>
+                        ${applicant.number}
+                    </p:column>
+
+
+                    <p:column headerText="FULL NAME">
+                        #{applicant.fullName}
+                    </p:column>
+
+                    <p:column headerText="GENDER">
+                        #{applicant.gender}
+                    </p:column>
+
+                    <p:column headerText="TOTAL PAYMENT">
+                        <h:outputText value="#{applicantController.totalPayment(applicant)}">
+                            <f:convertNumber type="currency"
+                                             minFractionDigits="2"
+                                             currencySymbol="GHC "/>
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column headerText="EXPECTED PAYMENT">
+                        <h:outputText value="#{applicantController.expectedPayment(applicant)}">
+                            <f:convertNumber type="currency"
+                                             minFractionDigits="2"
+                                             currencySymbol="GHC "/>
+                        </h:outputText>
+                    </p:column>
+
+                    <!--Admission Status-->
+                    <p:column headerText="ADMISSION STATUS">
+                        <h:outputText
+                                styleClass="ui-badge-success ui-font-weight-bolder"
+                                value="ADMITTED"
+                                rendered="#{applicantController.enumValue(applicant.admissionStatus) eq 'ADMITTED'}"/>
+                        <h:outputText
+                                styleClass="ui-badge-warning ui-font-weight-bolder"
+                                value="PENDING"
+                                rendered="#{applicantController.enumValue(applicant.admissionStatus) eq 'PENDING'}"/>
+
+                        <h:outputText
+                                styleClass="ui-badge-secondary ui-font-weight-bolder"
+                                value="AWAITING"
+                                rendered="#{applicantController.enumValue(applicant.admissionStatus) eq 'AWAITING'}"/>
+                    </p:column>
+
+                    <!-- Payment Status -->
+                    <p:column headerText="PAYMENT STATUS">
+                        <!-- render if applicant has made full payment-->
+                        <h:outputText
+                                styleClass="ui-badge-success"
+                                value="FULL PAYMENT"
+                                rendered="#{applicantController.totalPayment(applicant)
+                                ge applicantController.expectedPayment(applicant)}"/>
+                        <!-- render if applicant has made part payment-->
+                        <h:outputText
+                                styleClass="ui-badge-warning"
+                                value="PART PAYMENT"
+                                rendered="#{applicantController.totalPayment(applicant) gt 0 and
+                                applicantController.totalPayment(applicant) lt applicantController.expectedPayment(applicant)}"/>
+                        <!-- render if applicant has made no payment-->
+                        <h:outputText
+                                styleClass="ui-badge-danger"
+                                value="NO PAYMENT"
+                                rendered="#{applicantController.totalPayment(applicant) eq 0}"/>
+                    </p:column>
+
+
+                    <p:column style="width:3rem;text-align: center">
+                        <p:commandButton
+                                oncomplete="PF('applicantViewDialog').show()"
+                                update="@form"
+                                process="@this"
+                                icon="pi pi-user-edit"
+                                title="Admit"
+                                disabled="${applicantController.enumValue(applicant.admissionStatus) eq 'PENDING'
+                                or applicantController.enumValue(applicant.admissionStatus) eq 'ADMITTED'}">
+                            <f:setPropertyActionListener
+                                    value="${applicant}"
+                                    target="${applicantController.selectedApplicant}"/>
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
+            </p:card>
+
+            <ui:include src="payment-view.xhtml"/>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

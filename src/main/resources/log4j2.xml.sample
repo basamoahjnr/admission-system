@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration level="TRACE">
+
+    <Properties>
+        <Property name="log-path">/var/logs</Property>
+    </Properties>
+
+    <Appenders>
+        <!-- For Console-->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%sn %d{yyyy/MM/dd HH:mm:ss,SSS} %r [%-6p] [%t] %c{3} [%C{3}.%M(%F:%L)] - %m%n"/>
+        </Console>
+
+        <!-- For writing logs to a file-->
+        <RollingFile name="LogFile" fileName="${log-path}/app.log"
+                     filePattern="${log-path}/app-%d{yyyy-MM-dd}.log">
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+
+
+        <!-- For writing logs to a JSON file-->
+        <RollingFile name="LogFile" fileName="${log-path}/app.json" filePattern="${log-path}/app-%d{yyyy-MM-dd}.log">
+            <JsonLayout complete="true" properties="true" locationInfo="true"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+
+        <!-- For writing logs to mongodb-->
+        <NoSql name="Mongo4">
+            <MongoDb4 capped="true" collectionSize="104857600"
+                      connection="mongodb://localhost:${sys:MongoDBTestPort:-27017}/welfare.logs"/>
+        </NoSql>
+
+        <!-- For File writing on Different Thread-->
+        <Async name="Async">
+            <AppenderRef ref="LogFile"/>
+        </Async>
+    </Appenders>
+
+    <!-- Types of Loggers -->
+    <Loggers>
+        <Root>
+            <AppenderRef ref="Mongo4"/>
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="LogFile"/>
+        </Root>
+    </Loggers>
+</Configuration>

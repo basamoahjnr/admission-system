@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/WEB-INF/layout/simpleTemplate.xhtml">
+
+    <ui:define name="headTitle">${bundle.AdmissionsDasiboard_title}</ui:define>
+    <ui:define name="metadata">
+        <h:outputStylesheet name="/css/card.css"/>
+    </ui:define>
+
+    <ui:define name="wrapper">
+        <h:form>
+
+            <div style="height: 100vh">
+                <ui:include src="../commons/metrics-applicants.xhtml"/>
+            </div>
+
+        </h:form>
+    </ui:define>
+</ui:composition>

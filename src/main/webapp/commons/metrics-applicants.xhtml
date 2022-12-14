@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <div id="metrics-payments" class="ui-space-between-content">
+        <div class="card-container">
+            <div class="card-1">
+                <div class="card-image-1 ui-primary ">
+                    <h:outputText value="#{dashboardController.countApplicants('')}"/>
+                </div>
+
+                <div class="card-text-1">
+                    <h3>Total Applicants</h3>
+                    <p>
+                        Total Applicants
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-container">
+            <div class="card-1">
+                <div class="card-image-1 ui-primary ">
+                    <h:outputText value="#{dashboardController.countApplicants('AWAITING')}"/>
+                </div>
+
+                <div class="card-text-1">
+                    <h3>Total Awaiting</h3>
+                    <p>
+                        Total Applicants Without Admission Letters
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="card-container">
+            <div class="card-1">
+                <div class="card-image-1 ui-primary ">
+                    <h:outputText value="#{dashboardController.countApplicants('PENDING')}"/>
+                </div>
+
+                <div class="card-text-1">
+                    <h3>Total Pending</h3>
+                    <p>
+                        Total Applicants With Admssion Letters
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="card-container">
+            <div class="card-1">
+                <div class="card-image-1 ui-primary ">
+                    <h:outputText value="#{dashboardController.countApplicants('ADMITTED')}"/>
+                </div>
+
+                <div class="card-text-1">
+                    <h3>Total Admitted</h3>
+                    <p>
+                        Total Applicants With Full Payment
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>

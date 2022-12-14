@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns="https://jakarta.ee/xml/ns/persistence"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
+             version="3.0">
+
+
+
+    <persistence-unit name="admissions_pu" transaction-type="JTA">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <jta-data-source>java:/admissionsDS</jta-data-source>
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
+        <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
+        <properties>
+            <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
+            <!--      <property name="javax.persistence.schema-generation" value="drop-and-create"/>-->
+            <!--      <property name="javax.persistence.schema-generation.scripts.create-target" value="file:/META-INF/sampleCreate.ddl"/>-->
+            <!--      <property name="javax.persistence.schema-generation.scripts.drop-target" value="file:/META-INF/sampleDrop.ddl"/>-->
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.use_sql_comments" value="true"/>
+
+            <!--POSTGRES SPECIFIC-->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL95Dialect"/>
+            <property name="hibernate.connection.characterEncoding" value="UTF-8"/>
+            <property name="hibernate.connection.charSet" value="UTF-8"/>
+            <property name="hibernate.hbm2ddl.charset_name" value="UTF-8"/>
+
+
+            <!--SECOND LEVEL CACHE-->
+            <property name="hibernate.cache.use_second_level_cache" value="true"/>
+            <property name="hibernate.cache.region.factory_class" value="jcache"/>
+            <property name="hibernate.current_session_context_class" value="thread"/>
+            <property name="hibernate.cache.use_query_cache" value="true"/>
+            <property name="hibernate.javax.cache.provider" value="org.ehcache.jsr107.EhcacheCachingProvider"/>
+            <property name="hibernate.javax.cache.uri" value="file:/META-INF/ehcache.xml"/>
+        </properties>
+    </persistence-unit>
+</persistence>

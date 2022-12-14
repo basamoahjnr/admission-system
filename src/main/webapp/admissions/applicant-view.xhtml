@@ -1,0 +1,51 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <p:dialog header="Applicant Information"
+              widgetVar="applicantViewDialog"
+              modal="true"
+              showEffect="fade"
+              hideEffect="fade"
+              resizable="false">
+        <div class="card">
+            <p:panelGrid columns="2">
+
+                <f:facet name="header">
+                    <p:graphicImage url="https://via.placeholder.com/150" name="place holder" height="150"/>
+                    <h3>${applicantController.selectedApplicant.number}</h3>
+                </f:facet>
+
+                <h:outputText value="Name (Surname First) :"/>
+                <h:outputText value="${applicantController.selectedApplicant.fullName}"/>
+
+                <h:outputText value="Program :"/>
+                <h:outputText value="${applicantController.selectedApplicant.program}"/>
+
+                <h:outputText value="Application Status :"/>
+                <h:outputText
+                        value="${applicantController.enumValue(applicantController.selectedApplicant.admissionStatus)}"/>
+
+                <p:commandButton value="Admit Applicant"
+                                 icon="pi pi-mark"
+                                 process="@this"
+                                 update="@form growl"
+                                 disabled="#{applicantController.enumValue(applicantController.selectedApplicant.admissionStatus) == 'PENDING'
+                                 or applicantController.enumValue(applicantController.selectedApplicant.admissionStatus) == 'ADMITTED'}"
+                                 actionListener="${applicantController.changeApplicantAdmissionStatus}">
+                </p:commandButton>
+                <p:commandButton value="Cancel Applicant"
+                                 icon="pi pi-cancel"
+                                 process="@this"
+                                 update="@form growl"
+                                 disabled="#{applicantController.enumValue(applicantController.selectedApplicant.admissionStatus) == 'AWAITING'}"
+                                 actionListener="${applicantController.changeApplicantAdmissionStatus}">
+                </p:commandButton>
+            </p:panelGrid>
+
+        </div>
+    </p:dialog>
+
+
+</ui:composition>

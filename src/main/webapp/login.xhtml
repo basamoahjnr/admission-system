@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<f:view contentType="text/html" encoding="UTF-8">
+
+
+    <h:head>
+        <title>Login Page</title>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+        <!--        <link rel="shortcut icon" type="image/x-icon" href="#{resource['favicon/favicon.ico']}"/>-->
+        <meta name="theme-color" content="#444"/>
+        <meta name="mobile-web-app-capable" content="yes"/>
+        <style>
+            body, html {
+                height: 100%;
+                display: grid;
+            }
+
+            .center-me {
+                margin: auto;
+            }
+        </style>
+    </h:head>
+    <h:body>
+
+
+        <h:form id="loginForm" styleClass="center-me">
+
+            <p:link value="You are already logged in"
+                    outcome="${request.isUserInRole('ADMIN') ? '/dashboard': '/admissions/applicants'}"
+                    style="font-weight: bolder; font-size: large"
+                    rendered="${not empty facesContext.externalContext.userPrincipal.name}"/>
+
+
+            <p:panel id="loginPnl" header="Login"
+                     rendered="${empty facesContext.externalContext.userPrincipal.name}">
+
+                <p:growl id="growl" globalOnly="true" skipDetailIfEqualsSummary="true"/>
+                <p:messages globalOnly="true"/>
+
+
+                <h:panelGrid id="loginPanel" columns="3" cellpadding="5">
+
+                    <p:outputLabel for="username" value="${bundle.ViewLoginLabel_username}"/>
+                    <p:inputText id="username" value="#{loginController.username}" required="true" size="40"
+                                 requiredMessage="${bundle.ViewLoginPageRequiredMessage_username}"
+                                 style="width: 100%"/>
+                    <p:message for="username"/>
+
+                    <p:outputLabel for="password" value="${bundle.ViewLoginLabel_password}"/>
+                    <p:password id="password" value="#{loginController.password}" feedback="false" size="40"
+                                required="true" requiredMessage="${bundle.ViewLoginPageRequiredMessage_password}"
+                                style="width: 100%"/>
+                    <p:message for="password"/>
+
+                </h:panelGrid>
+                <h:panelGrid columns="1" cellpadding="10">
+                    <p:commandButton id="loginButton"
+                                     action="#{loginController.login()}"
+                                     value="${bundle.ViewLginLabel_login}" update="loginForm growl" ajax="true"/>
+
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+    </h:body>
+</f:view>
+</html>
+

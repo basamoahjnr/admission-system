@@ -1,0 +1,119 @@
+.ui-datatable .ui-datatable-header {
+    text-align: right !important;
+}
+
+.ui-space-between-content {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.ui-space-rows {
+    display: flex;
+}
+
+#main-buttons {
+    margin-bottom: 3rem;
+    margin-top: 1.5rem;
+}
+
+.ui-mb-3 {
+    margin-bottom: 3rem;
+}
+
+.ui-mt-2 {
+    margin-top: 1rem;
+}
+
+
+.ui-growl {
+    left: calc(50% - 150px);
+}
+
+table {
+    border-collapse: collapse
+}
+
+td {
+    border-style: hidden !important;
+}
+
+.footer {
+    width: 100%;
+    text-align: center;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    height: 4rem;
+    color: #E46F34 !important;
+    background-color: #2E3440 !important;
+    border-top: #E46F34 2px;
+}
+
+.ui-sticky {
+    top: 10px !important;
+}
+
+@media (max-width: 960px) {
+    .ui-sticky {
+        top: 10px !important;
+    }
+}
+
+
+.ui-badge-success {
+    color: white;
+    background-color: #1BC44B;
+    border: 2px solid #1BC44B;
+    border-radius: 25px;
+    padding: 4px 10px;
+}
+
+
+.ui-badge-warning {
+    color: white;
+    background-color: #FFC107;
+    border: 2px solid #FFC107;
+    border-radius: 25px;
+    padding: 4px 10px;
+}
+
+.ui-badge-secondary {
+    color: white;
+    background-color: #83878D;
+    border: 2px solid #83878D;
+    border-radius: 25px;
+    padding: 4px 10px;
+}
+
+.ui-badge-danger {
+    color: white;
+    background-color: #EE6055;
+    border: 2px solid #EE6055;
+    border-radius: 25px;
+    padding: 4px 10px;
+}
+
+
+.ui-badge-info {
+    color: white;
+    background-color: #17A2B8;
+    border: 2px solid #17A2B8;
+    border-radius: 25px;
+    padding: 4px 10px;
+}
+
+.ui-font-weight-bolder {
+    font-weight: bolder;
+}
+
+.ui-default-background {
+    background-color: #F7F7F7;
+    padding: 2em 3em
+}
+
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 1rem;
+    text-decoration: none;
+}

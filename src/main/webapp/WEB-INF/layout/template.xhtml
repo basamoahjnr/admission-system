@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+<f:view contentType="text/html" encoding="UTF-8">
+    <ui:insert name="metadata"/>
+    <h:head>
+        <title><ui:insert name="headTitle">Java EE 8 Sample</ui:insert></title>
+        <!-- Required meta tags -->
+        <meta charset="utf-8"/>
+        <ui:insert name="headIncludes"/>
+    </h:head>
+
+    <h:body>
+        <header>
+            <ui:include src="/WEB-INF/layout/nav.xhtml"/>
+        </header>
+        <main role="main">
+            <ui:include src="/WEB-INF/layout/alert.xhtml"/>
+            <ui:insert name="content"/>
+        </main>
+        <footer>
+            <ui:include src="/WEB-INF/layout/footer.xhtml"/>
+        </footer>
+        <ui:insert name="bodyIncludes">
+
+        </ui:insert>
+    </h:body>
+</f:view>
+</html>

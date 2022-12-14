@@ -1,0 +1,79 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <p:dialog header="Applicant Information"
+              widgetVar="applicantViewDialog"
+              modal="true"
+              showEffect="fade"
+              hideEffect="fade"
+              resizable="false" width="50%">
+        <div class="card">
+
+            <div id="main-details" class="ui-space-between-content ui-mb-3 ui-mt-2">
+                <div id="applicant_image">
+                    <p:graphicImage url="https://via.placeholder.com/150" name="place holder" height="150"/>
+                    <h3><span>${applicantController.selectedApplicant.number}</span></h3>
+                </div>
+                <div id="applicant_details">
+                    <p:panelGrid columns="4">
+                        <h:outputText value="Name (Surname First) :"/>
+                        <h:outputText value="${applicantController.selectedApplicant.fullName}"/>
+
+                        <h:outputText value="Program :"/>
+                        <h:outputText value="${applicantController.selectedApplicant.program}"/>
+
+                        <h:outputText value="Total Payment :"/>
+                        <h:outputText styleClass="ui-badge-success ui-font-weight-bolder"
+                                      value="${applicantController.totalPayment(applicantController.selectedApplicant)}">
+                            <f:convertNumber type="currency"
+                                             minFractionDigits="2"
+                                             currencySymbol="GHC "/>
+                        </h:outputText>
+
+                        <h:outputText value="Expected Payment :"/>
+                        <h:outputText styleClass="ui-badge-info ui-font-weight-bolder"
+                                      value="${applicantController.expectedPayment(applicantController.selectedApplicant)}">
+                            <f:convertNumber type="currency"
+                                             minFractionDigits="2"
+                                             currencySymbol="GHC "/>
+                        </h:outputText>
+                    </p:panelGrid>
+                </div>
+            </div>
+
+            <p:spacer height="5"/>
+
+            <p:dataTable var="paymentLedger" value="#{applicantController.selectedApplicant.paymentLedgers}">
+                <p:column headerText="NAME">
+                    <h:outputText value="#{applicantController.enumValue(paymentLedger.ledgerType)}"/>
+                </p:column>
+
+                <p:column headerText="Name">
+                    <h:outputText value="#{applicantController.enumValue(paymentLedger.paymentStatus)}"/>
+                </p:column>
+
+                <p:column headerText="TOTAL PAYMENT">
+                    <h:outputText value="#{paymentLedger.totalPayment}">
+                        <f:convertNumber type="currency"
+                                         minFractionDigits="2"
+                                         currencySymbol="GHC "/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column headerText="EXPECTED PAYMENT">
+                    <h:outputText value="#{paymentLedger.expectedPayment}">
+                        <f:convertNumber type="currency"
+                                         minFractionDigits="2"
+                                         currencySymbol="GHC "/>
+                    </h:outputText>
+                </p:column>
+            </p:dataTable>
+
+        </div>
+    </p:dialog>
+
+
+</ui:composition>

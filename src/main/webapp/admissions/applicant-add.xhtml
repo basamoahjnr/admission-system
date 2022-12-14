@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/layout/simpleTemplate.xhtml">
+
+    <ui:define name="headTitle">${bundle.ApplicantListPage_title}</ui:define>
+
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{applicantController.nullSelected}"/>
+    </f:metadata>
+
+    <ui:define name="wrapper">
+        <h:form>
+            <div class="card">
+                <p:panelGrid columns="3">
+
+                    <p:outputLabel for="@next" value="Number :"/>
+                    <p:inputText id="applicantNumber"
+                                 required="true"
+                                 value="${applicantController.selectedApplicant.number}"/>
+                    <p:message for="@previous"/>
+
+                    <p:outputLabel for="@next" value="Surname :"/>
+                    <p:inputText id="applicantSurname"
+                                 required="true"
+                                 value="${applicantController.selectedApplicant.surname}"/>
+                    <p:message for="@previous"/>
+
+                    <p:outputLabel for="@next" value="Othernames :"/>
+                    <p:inputText id="applicantOthernames"
+                                 required="true"
+                                 value="${applicantController.selectedApplicant.otherNames}"/>
+                    <p:message for="@previous"/>
+
+                    <p:outputLabel for="@next" value="Program :"/>
+                    <p:inputText id="applicantProgram"
+                                 required="true"
+                                 value="${applicantController.selectedApplicant.program}"/>
+                    <p:message for="@previous"/>
+
+
+                    <p:commandButton value="Admit Applicant"
+                                     icon="pi pi-plus"
+                                     update="@form"
+                                     action="${applicantController.addApplicant}">
+                    </p:commandButton>
+                </p:panelGrid>
+            </div>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

@@ -1,13 +1,9 @@
 package com.yasobafinibus.nnmtc.enrollment.model;
 
 import jakarta.persistence.*;
-import org.hibernate.Hibernate;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import static jakarta.persistence.CascadeType.*;
 
@@ -27,7 +23,6 @@ import static jakarta.persistence.CascadeType.*;
 public class PaymentLedger extends AbstractEntity {
 
 
-    @LazyCollection(LazyCollectionOption.TRUE)
     @OneToMany(mappedBy = "paymentLedger", cascade = {PERSIST, MERGE, REFRESH}, fetch = FetchType.LAZY)
     private final List<Payment> payments = new ArrayList<>();
     //bears similarity with purpose of payment
@@ -79,9 +74,13 @@ public class PaymentLedger extends AbstractEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
+
         PaymentLedger that = (PaymentLedger) o;
-        return id != null && Objects.equals(id, that.id);
+
+        if (getLedgerType() != that.getLedgerType()) return false;
+        if (!getApplicant().equals(that.getApplicant())) return false;
+        return getExpectedPayment().equals(that.getExpectedPayment());
     }
 
     @Override

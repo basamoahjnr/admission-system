@@ -7,33 +7,27 @@
 
 
     <persistence-unit name="admissions_pu" transaction-type="JTA">
-        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <jta-data-source>java:/admissionsDS</jta-data-source>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
         <properties>
             <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
-            <!--      <property name="javax.persistence.schema-generation" value="drop-and-create"/>-->
-            <!--      <property name="javax.persistence.schema-generation.scripts.create-target" value="file:/META-INF/sampleCreate.ddl"/>-->
-            <!--      <property name="javax.persistence.schema-generation.scripts.drop-target" value="file:/META-INF/sampleDrop.ddl"/>-->
-            <property name="hibernate.show_sql" value="true"/>
-            <property name="hibernate.format_sql" value="true"/>
-            <property name="hibernate.use_sql_comments" value="true"/>
-
-            <!--POSTGRES SPECIFIC-->
-            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL95Dialect"/>
-            <property name="hibernate.connection.characterEncoding" value="UTF-8"/>
-            <property name="hibernate.connection.charSet" value="UTF-8"/>
-            <property name="hibernate.hbm2ddl.charset_name" value="UTF-8"/>
+            <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
+            <property name="eclipselink.target-server" value="JBoss"/>
+            <property name="eclipselink.target-database" value="PostgreSQL"/>
 
 
-            <!--SECOND LEVEL CACHE-->
-            <property name="hibernate.cache.use_second_level_cache" value="true"/>
-            <property name="hibernate.cache.region.factory_class" value="jcache"/>
-            <property name="hibernate.current_session_context_class" value="thread"/>
-            <property name="hibernate.cache.use_query_cache" value="true"/>
-            <property name="hibernate.javax.cache.provider" value="org.ehcache.jsr107.EhcacheCachingProvider"/>
-            <property name="hibernate.javax.cache.uri" value="file:/META-INF/ehcache.xml"/>
+            <property name="eclipselink.jpa.uppercase-column-names" value="true"/>
+            <property name="eclipselink.refresh" value="true"/>
+            <property name="eclipselink.deploy-on-startup" value="true" />
+
+            <!--LOGGING-->
+            <property name="eclipselink.logging.level.sql" value="FINE" />
+            <property name="eclipselink.logging.parameters" value="true" />
+            <property name="eclipselink.debug" value="OFF" />
+            <property name="eclipselink.weaving" value="static" />
+            <property name="eclipselink.logging.logger" value="DefaultLogger" />
         </properties>
     </persistence-unit>
 </persistence>

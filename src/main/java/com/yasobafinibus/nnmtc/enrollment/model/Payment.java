@@ -1,7 +1,6 @@
 package com.yasobafinibus.nnmtc.enrollment.model;
 
 import jakarta.persistence.*;
-import org.hibernate.Hibernate;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -66,9 +65,11 @@ public class Payment extends AbstractEntity implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
+
         Payment payment = (Payment) o;
-        return id != null && Objects.equals(id, payment.id);
+
+        return getTransactionId().equals(payment.getTransactionId());
     }
 
     @Override

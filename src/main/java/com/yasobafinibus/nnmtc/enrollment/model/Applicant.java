@@ -4,10 +4,6 @@ package com.yasobafinibus.nnmtc.enrollment.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import org.apache.commons.lang3.StringUtils;
-import org.hibernate.Hibernate;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.SelectBeforeUpdate;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -19,10 +15,7 @@ import static jakarta.persistence.CascadeType.REFRESH;
 
 @Entity
 @Cacheable
-@DynamicUpdate
-@SelectBeforeUpdate
 @EntityListeners(ApplicantListener.class)
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Table(name = "applicants",
         indexes = {@Index(name = "idx_number_full_name", columnList = "NUMBER, FULL_NAME")
         },
@@ -142,15 +135,15 @@ public class Applicant extends AbstractEntity implements Serializable, Comparabl
             this.fullName = StringUtils.capitalize(surname) + " " + StringUtils.capitalize(otherNames);
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Applicant applicant = (Applicant) o;
-        return id != null && Objects.equals(id, applicant.id);
-    }
+        if (o == null || getClass() != o.getClass()) return false;
 
+        Applicant applicant = (Applicant) o;
+
+        return getNumber().equals(applicant.getNumber());
+    }
 
     @Override
     public int hashCode() {
